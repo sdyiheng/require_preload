@@ -357,7 +357,6 @@ var requirejs, require, define;
         }
 
         function removeScript(name) {
-            console.log("removeScript:"+name);
             if (isBrowser) {
                 each(scripts(), function (scriptNode) {
                     if (scriptNode.getAttribute('data-requiremodule') === name &&
@@ -416,7 +415,6 @@ var requirejs, require, define;
          * @returns {Object}
          */
         function makeModuleMap(name, parentModuleMap, isNormalized, applyMap) {
-            console.log("makeModuleMap name:"+name);
             var url, pluginModule, suffix, nameParts,
                 prefix = null,
                 parentName = parentModuleMap ? parentModuleMap.name : null,
@@ -484,7 +482,6 @@ var requirejs, require, define;
             suffix = prefix && !pluginModule && !isNormalized ?
                      '_unnormalized' + (unnormalizedCounter += 1) :
                      '';
-            console.log("makeModuleMap normalizedName:" + normalizedName);
 
             return {
                 prefix: prefix,
@@ -504,10 +501,8 @@ var requirejs, require, define;
             var id = depMap.id,
                 mod = getOwn(registry, id);
 
-            console.log("getModule id:" + id);
 
             if (!mod) {
-                console.log("create Module");
                 mod = registry[id] = new context.Module(depMap);
             }
 
@@ -578,7 +573,6 @@ var requirejs, require, define;
 
         handlers = {
             'require': function (mod) {
-                console.log("require:"+mod);
                 if (mod.require) {
                     return mod.require;
                 } else {
@@ -646,7 +640,6 @@ var requirejs, require, define;
         }
 
         function checkLoaded() {
-            console.log("checkLoaded");
             var err, usingPathFallback,
                 waitInterval = config.waitSeconds * 1000,
                 //It is possible to disable the wait interval by using waitSeconds of 0.
@@ -835,7 +828,6 @@ var requirejs, require, define;
             },
 
             load: function () {
-                console.log("module load invoked.");
                 var url = this.map.url;
 
                 //Regular dependency.
@@ -1215,7 +1207,6 @@ var requirejs, require, define;
         }
 
         function removeListener(node, func, name, ieName) {
-            console.log("removeListener:" + name);
             //Favor detachEvent because of IE9
             //issue, see attachEvent/addEventListener comment elsewhere
             //in this file.
@@ -1291,7 +1282,6 @@ var requirejs, require, define;
              * @param {Object} cfg config object to integrate.
              */
             configure: function (cfg) {
-                console.log("configure" + JSON.stringify(cfg));
                 //Make sure the baseUrl ends in a slash.
                 if (cfg.baseUrl) {
                     if (cfg.baseUrl.charAt(cfg.baseUrl.length - 1) !== '/') {
@@ -1422,7 +1412,6 @@ var requirejs, require, define;
                 options = options || {};
 
                 function localRequire(deps, callback, errback) {
-                    console.log("localRequire ." + deps);
                     var id, map, requireMod;
 
                     if (options.enableBuildCallback && callback && isFunction(callback)) {
@@ -1459,7 +1448,6 @@ var requirejs, require, define;
                                         contextName +
                                         (relMap ? '' : '. Use require([])')));
                         }
-                        console.log("localRequire return 1");
                         return defined[id];
                     }
 
@@ -1485,7 +1473,6 @@ var requirejs, require, define;
                         checkLoaded();
                     });
 
-                    console.log("localRequire return 2");
                     return localRequire;
                 }
 
@@ -1587,7 +1574,6 @@ var requirejs, require, define;
              * @param {String} moduleName the name of the module to potentially complete.
              */
             completeLoad: function (moduleName) {
-                console.log("completeLoad " + moduleName);
 
                 var found, args, mod,
                     shim = getOwn(config.shim, moduleName) || {},
@@ -1727,7 +1713,6 @@ var requirejs, require, define;
              * that was loaded.
              */
             onScriptLoad: function (evt) {
-                console.log("onScriptLoad");
                 //Using currentTarget instead of target for Firefox 2.0's sake. Not
                 //all old browsers will be supported, but this one was easy enough
                 //to support and still makes sense.
@@ -1827,7 +1812,6 @@ var requirejs, require, define;
      * AMD loaders on globally agreed names.
      */
     req.config = function (config) {
-        console.log("config" + JSON.stringify(config));
         return req(config);
     };
 
@@ -1845,7 +1829,6 @@ var requirejs, require, define;
      * Export require as a global, but only if it does not already exist.
      */
     if (!require) {
-        console.log("init require.");
         require = req;
     }
 
@@ -1900,7 +1883,6 @@ var requirejs, require, define;
      * Creates the node for the load command. Only used in browser envs.
      */
     req.createNode = function (config, moduleName, url) {
-        console.log("createNode, modulename=" + moduleName+", url="+url);
         var node = config.xhtml ?
                 document.createElementNS('http://www.w3.org/1999/xhtml', 'html:script') :
                 document.createElement('script');
@@ -1920,7 +1902,6 @@ var requirejs, require, define;
      * @param {Object} url the URL to the module.
      */
     req.load = function (context, moduleName, url) {
-        console.log("load");
         var config = (context && context.config) || {},
             node;
         if (isBrowser) {
@@ -2185,6 +2166,5 @@ var requirejs, require, define;
     };
 
     //Set up with config info.
-    console.log("init config" + JSON.stringify(cfg));
     req(cfg);
 }(this, (typeof setTimeout === 'undefined' ? undefined : setTimeout)));
